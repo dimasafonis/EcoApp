@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import com.googlecode.tesseract.android.TessBaseAPI
 import java.io.File
@@ -15,10 +16,13 @@ import javax.net.ssl.HttpsURLConnection
 class MainActivity : AppCompatActivity() {
     private lateinit var camera: Intent
     private var data: Bitmap? = null
+    private lateinit var preview: ImageView
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 data = result.data?.extras?.get("data") as Bitmap
+                preview.setImageBitmap(data)
             }
+        startCamera()
         }
 
     private lateinit var tess: TessBaseAPI
@@ -29,16 +33,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         camera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         tesseractDataInit()
-        checkCodes()
         tess.init(filesDir.absolutePath, "eng")
+        preview = findViewById(R.id.cameraPreview)
+        startCamera()
 
     }
 
-    private fun checkCodes() {
-        var conn = URL("https://github.com/dimasafonis/EcoApp/list.json").openConnection() as HttpsURLConnection
-        conn.requestMethod = "GET"
-        conn.addRequestProperty("", "")
-    }
+    private fun startCamera() { resultLauncher.launch(camera) }
 
     private fun tesseractDataInit() {
         tesseractPath = File(this.filesDir.absolutePath, "tessdata")
@@ -57,13 +58,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("unused_parameter")
     fun onCaptureTouch(view: View) {
-        resultLauncher.launch(camera)
-        @Suppress("ControlFlowWithEmptyBody") while (data == null) {}
         tess = TessBaseAPI()
         tess.setImage(data)
         val text = tess.utF8Text
+        println(text)
         tess.end()
-        data = null
     }
 }
