@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Коды переработки</string>
+    <string name="camera_required">Приложение не сможет работать без камеры</string>
+    <string name="camera_required_title">Разрешите использовать камеру</string>
+    <string name="change_camera">Переключиться на другую камеру</string>
+    <string name="capture">Сканировать</string>
 </resources>
