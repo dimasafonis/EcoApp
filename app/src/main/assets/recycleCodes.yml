@@ -1,0 +1,179 @@
+codes:
+  # plastic
+  - codes:
+      - 1
+      - PET
+      - PETE
+    res: pet
+    cat: plastic
+    recycle: 1
+
+  - codes:
+      - 2
+      - PE-HD
+      - PEHD
+      - HDPE
+    res: pehd
+    cat: plastic
+    recycle: 1
+
+  - codes:
+      - 3
+      - PVC
+    res: pet
+    cat: plastic
+    recycle: 0.3
+
+  - codes:
+      - 4
+      - PE-LD
+      - PELD
+      - LDPE
+    res: pet
+    cat: plastic
+    recycle: 0.5
+
+  - codes:
+      - 5
+      - PP
+    res: pp
+    cat: plastic
+    recycle: 1
+
+  - codes:
+      - 6
+      - PS
+    res: ps
+    cat: plastic
+    recycle: 0.3
+
+  - codes:
+      - 7
+      - O
+    res: other
+    cat: plastic
+    recycle: 0
+
+  - codes:
+      - 9
+      - ABS
+    res: abs
+    cat: plastic
+    recycle: 1
+    # paper
+  - codes:
+      - 20
+      - PAP
+      - PCB
+    res: corrugated_cardboard
+    cat: paper
+    recycle: 1
+
+  - codes:
+      - 21
+      - PAP
+    res: cardboard
+    cat: paper
+    recycle: 1
+
+  - codes:
+      - 22
+      - PAP
+    res: paper
+    cat: paper
+    recycle: 1
+
+  - codes:
+      - 23
+      - PBD
+      - PPB
+    res: paper
+    cat: paper
+    recycle: 1
+
+  # metals
+  - codes:
+      - 40
+      - FE
+    res: steel
+    cat: metal
+    recycle: 1
+
+  - codes:
+      - 41
+      - ALU
+    res: alu
+    cat: steel
+    recycle: 1
+  # organic
+  - codes:
+      - 50
+      - FOR
+    res: wood
+    cat: organic
+    recycle: 1
+
+  - codes:
+    - 51
+    - FOR
+    res: cork
+    cat: organic
+    recycle: 1
+
+  - codes:
+      - 60
+      - TEX
+    res: cotton
+    cat: organic
+    recycle: 1
+
+  - codes:
+      - 61
+      - TEX
+    res: jute_fiber
+    cat: organic
+    recycle: 1
+
+  - codes:
+      - 70
+      - GL
+    res: glass_t
+    cat: glass
+    recycle: 1
+
+  - codes:
+      - 71
+      - GL
+    res: glass_green
+    cat: glass
+    recycle: 1
+
+  - codes:
+      - 72
+      - GL
+    res: glass_brown
+    cat: glass
+    recycle: 1
+
+  - codes:
+      - 73
+      - GL
+    res: glass_dark_brown
+    cat: glass
+    recycle: 1
+
+categories:
+  - res: plastic
+    name: plastic
+
+  - res: paper
+    name: paper
+
+  - res: metal
+    name: metal
+
+  - res: organic
+    name: organic
+
+  - res: glass
+    name: glass

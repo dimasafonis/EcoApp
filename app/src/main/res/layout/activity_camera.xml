@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".CameraActivity">
 
-    <TextureView
+    <ImageView
         android:id="@+id/preview"
         android:layout_width="190dp"
         android:layout_height="307dp"

@@ -1,8 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Экокамера</string>
+    <!-- Use/Don't use -->
+    <string name="dont_use">Эту упаковку лучше не использовать. </string>
+    <string name="bad">содержит вредные материалы</string>
+    <string name="hard_to_recycle">мало мест где принимают этот материал</string>
+    <string name="not_recycle">Этот материал не перерабатывается</string>
+    <string name="hard_to_find">Материал можно сдать, но далеко не везде</string>
+    <string name="use">Эту упаковку можно сдать</string>
+    <!-- Camera -->
     <string name="camera_required">Приложение не сможет работать без камеры</string>
     <string name="camera_required_title">Разрешите использовать камеру</string>
     <string name="change_camera">Переключиться на другую камеру</string>
     <string name="capture">Сканировать</string>
+    <!-- Dialog -->
     <string name="ok">Ок</string>
+    <!-- Text Recognition -->
+    <string name="recognized_text">Приложение распознало</string>
+    <string name="material_count">Количество материала</string>
+    <string name="material_after_recycle">Количество материала после переработки</string>
+    <string name="material_type">Тип материала</string>
+    <string name="material_subtype">Подтип материала</string>
+    <string name="unknown">Неизвестно</string>
+    <!-- Types -->
+    <string name="plastic">Пластмасса</string>
+    <string name="paper">Бумага</string>
+    <string name="metal">Метал</string>
+    <string name="glass">Стекло</string>
+    <string name="organic">Органичиский</string>
+    <string name="composite">Композиционные</string>
+    <!-- Subtypes -->
+    <string name="pet">Полиэтилентерефталат (лавсан)</string>
+    <string name="pe">Полиэтилен высокой плотности (низкого давления)</string>
+    <string name="pvc">Поливинилхлорид</string>
+    <string name="peld">Полиэтилен низкой плотности (высокого давления)</string>
+    <string name="pp">Полипропилен</string>
+    <string name="ps">Полистирол</string>
+    <string name="o">Другой</string>
+    <string name="abs">АБС</string>
 </resources>
