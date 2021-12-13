@@ -158,9 +158,94 @@ codes:
   - codes:
       - 73
       - GL
+      - GLS
     res: glass_dark_brown
     cat: glass
     recycle: 1
+
+  - codes:
+      - 74
+      - GL
+      - GLS
+    res: glass_light_brown
+    cat: glass
+    recycle: 1
+
+  - codes:
+      - 75
+      - GL
+      - GLS
+    res: glass_lead
+    cat: glass
+    recycle: 1
+
+  - codes:
+      - 76
+      - GL
+      - GLS
+    res: crystal
+    cat: glass
+    recycle: 1
+
+  - codes:
+      - 77
+      - GL
+      - GLS
+    res: glass_copper
+    cat: glass
+    recycle: 1
+
+  - codes:
+      - 78
+      - GL
+      - GLS
+    res: glass_silver
+    cat: glass
+    recycle: 1
+
+  - codes:
+      - 79
+      - GL
+    res: glass_gold
+    cat: glass
+    recycle: 1
+
+  # composition
+  - codes:
+      - 80
+    res: paper_unknown
+    cat: composition
+    recycle: 0
+
+  - codes:
+      - 81
+      - PapPet
+    res: paper_plastic
+    cat: composition
+    recycle: 0.5
+
+  - codes:
+      - 82
+    res: paper_alu
+    cat: composition
+    recycle: 0.5
+
+  - codes:
+      - 83
+    res: paper_white
+    cat: composition
+    recycle: 0.5
+
+  - codes:
+      - 84
+      - C/PAP
+    res: paper_plastic_alu
+    cat: composition
+    recycle: 0.5
+
+  - codes:
+      - 85
+    res: paper_plastic_alu_
 
 categories:
   - res: plastic
@@ -177,3 +262,6 @@ categories:
 
   - res: glass
     name: glass
+
+  - res: composition
+   - name: composition
