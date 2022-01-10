@@ -1,21 +1,21 @@
 package dimasafonis.ecoapp
 
-import org.yaml.snakeyaml.Yaml
-import org.yaml.snakeyaml.constructor.Constructor
+import com.google.gson.GsonBuilder
 import java.io.InputStream
 
 class Codes {
-    var codes: List<Code> = arrayListOf()
-    var categories: List<Category> = arrayListOf()
+    var codes: ArrayList<Code> = arrayListOf()
+    var categories: ArrayList<Category> = arrayListOf()
 
-    class Category(val res: String, val name: String)
-    class Code(val codes: Array<String>, val res: String, val cat: String,
+    data class Category(val name: String, val codes: List<String>)
+    data class Code(val codes: List<String>, val res: String, val cat: String,
                val recycle: Float)
 
     companion object {
         @JvmStatic
         fun load(input: InputStream): Codes {
-            return Yaml(Constructor(Codes::class.java)).load(input) as Codes
+            val gson = GsonBuilder().create()
+            return gson.fromJson(input.reader(), Codes::class.java)
         }
     }
 }

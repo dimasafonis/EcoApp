@@ -1,0 +1,334 @@
+{
+  "codes": [
+    {
+      "codes": [1, "PET", "PETE"],
+      "res": "pet",
+      "cat": "plastic",
+      "recycle": 1
+    },
+
+    {
+      "codes": [2, "PEHD", "PEHD", "HDPE"],
+      "res": "pehd",
+      "cat": "plastic",
+      "recycle": 1
+    },
+
+    {
+      "codes": [3, "PVC"],
+      "res": "pet",
+      "cat": "plastic",
+      "recycle": 0.3
+    },
+
+    {
+      "codes": [4, "PELD", "PELD", "LDPE"],
+      "res": "pet",
+      "cat": "plastic",
+      "recycle": 0.5
+    },
+
+    {
+      "codes": [5, "PP"],
+      "res": "pp",
+      "cat": "plastic",
+      "recycle": 1
+    },
+
+    {
+      "codes": [6, "PS"],
+      "res": "ps",
+      "cat": "plastic",
+      "recycle": 0.3
+    },
+
+    {
+      "codes": [7, "O", "Other"],
+      "res": "other",
+      "cat": "plastic",
+      "recycle": 0
+    },
+
+    {
+      "codes": [9, "ABS"],
+      "res": "abs",
+      "cat": "plastic",
+      "recycle": 1
+    },
+
+    {
+      "codes": [20, "PAP", "PCB"],
+      "res": "corrugated_cardboard",
+      "cat": "paper",
+      "recycle": 1
+    },
+
+    {
+      "codes": [21, "PAP"],
+      "res": "cardboard",
+      "cat": "paper",
+      "recycle": 1
+    },
+
+    {
+      "codes": [22, "PAP"],
+      "res": "paper",
+      "cat": "paper",
+      "recycle": 1
+    },
+
+    {
+      "codes": [23, "PBD", "PPB"],
+      "res": "wax_paper",
+      "cat": "paper",
+      "recycle": 1
+    },
+
+  {
+      "codes": [40, "FE"],
+      "res": "steel",
+      "cat": "metal",
+      "recycle": 1
+    },
+
+    {
+      "codes": [41, "ALU"],
+      "res": "alu",
+      "cat": "metal",
+      "recycle": 1
+    },
+
+    {
+      "codes": [50, "FOR"],
+      "res": "wood",
+      "cat": "organic",
+      "recycle": 1
+    },
+
+    {
+      "codes": [51, "FOR"],
+      "res": "cork",
+      "cat": "organic",
+      "recycle": 1
+    },
+
+    {
+      "codes": [60, "TEX"],
+      "res": "cotton",
+      "cat": "organic",
+      "recycle": 1
+    },
+
+    {
+      "codes": [61, "TEX"],
+      "res": "jute_fiber",
+      "cat": "organic",
+      "recycle": 1
+    },
+
+    {
+      "codes": [70, "GL"],
+      "res": "glass_t",
+      "cat": "glass",
+      "recycle": 1
+    },
+
+    {
+      "codes": [71, "GL"],
+      "res": "glass_green",
+      "cat": "glass",
+      "recycle": 1
+    },
+
+    {
+      "codes": [72, "GL"],
+      "res": "glass_brown",
+      "cat": "glass",
+      "recycle": 1
+    },
+
+    {
+      "codes": [73, "GL", "GLS"],
+      "res": "glass_dark_brown",
+      "cat": "glass",
+      "recycle": 1
+    },
+
+    {
+      "codes": [74, "GL", "GLS"],
+      "res": "glass_light_brown",
+      "cat": "glass",
+      "recycle": 1
+    },
+
+    {
+      "codes": [75, "GL", "GLS"],
+      "res": "glass_lead",
+      "cat": "glass",
+      "recycle": 1
+    },
+
+    {
+      "codes": [76, "GL", "GLS"],
+      "res": "crystal",
+      "cat": "glass",
+      "recycle": 1
+    },
+
+    {
+      "codes": [77, "GL", "GLS"],
+      "res": "glass_copper",
+      "cat": "glass",
+      "recycle": 1
+    },
+
+    {
+      "codes": [78, "GL", "GLS"],
+      "res": "glass_silver",
+      "cat": "glass",
+      "recycle": 1
+    },
+
+    {
+      "codes": [79, "GL"],
+      "res": "glass_gold",
+      "cat": "glass",
+      "recycle": 1
+    },
+
+    {
+      "codes": [80],
+      "res": "paper_unknown",
+      "cat": "composition",
+      "recycle": 0
+    },
+
+    {
+      "codes": [81, "PapPet", "C/PAP"],
+      "res": "paper_plastic",
+      "cat": "composition",
+      "recycle": 0.5
+    },
+
+    {
+      "codes": [82, "C/PAP"],
+      "res": "paper_alu",
+      "cat": "composition",
+      "recycle": 0.5
+    },
+
+    {
+      "codes": [83, "C/PAP"],
+      "res": "paper_tinplate",
+      "cat": "composition",
+      "recycle": 0.5
+    },
+
+    {
+      "codes": [84, "C/PAP"],
+      "res": "paper_plastic_alu",
+      "cat": "composition",
+      "recycle": 0.5
+    },
+
+    {
+      "codes": [85],
+      "res": "paper_plastic_alu_tinplate",
+      "cat": "composition",
+      "recycle": 0.5
+    },
+
+    {
+      "codes": [87],
+      "res": "bio_plastic",
+      "cat": "composition",
+      "recycle": 0.5
+    },
+
+    {
+      "codes": [90],
+      "res": "plastic_alu",
+      "cat": "composition",
+      "recycle": 0.5
+    },
+
+    {
+      "codes": [91],
+      "res": "plastic_tinplate",
+      "cat": "composition",
+      "recycle": 0.5
+    },
+
+    {
+      "codes": [92],
+      "res": "plastic_unknown",
+      "cat": "composition",
+      "recycle": 0
+    },
+
+    {
+      "codes": [95],
+      "res": "glass_plastic",
+      "cat": "composition",
+      "recycle": 0.5
+    },
+
+    {
+      "codes": [96],
+      "res": "glass_alu",
+      "cat": "composition",
+      "recycle": 0.5
+    },
+
+    {
+      "codes": [97, "C/GL"],
+      "res": "glass_tinplate",
+      "cat": "composition",
+      "recycle": 0.5
+    },
+
+    {
+      "codes": [98, "C/GL"],
+      "res": "glass_unknown",
+      "cat": "composition",
+      "recycle": 0.5
+    }
+  ],
+  "categories": [
+    {
+      "name": "plastic",
+      "codes": ["PET", "PETE", "PEHD", "HDPE", "PVC", "PELD", "LDPE", "PP", "PS", "O", "Other", "ABS",
+        "1", "2", "3", "4", "5", "6", "7", "9"]
+    },
+
+    {
+      "name": "paper",
+      "codes": ["PCB", "PAP", "PBD", "PPB",
+        "20", "21", "22", "23"]
+    },
+
+    {
+      "name": "metal",
+      "codes": ["FE", "ALU",
+        "40", "41"]
+    },
+
+    {
+      "name": "organic",
+      "codes": ["FOR", "TEX",
+        "50", "51", "60", "61"]
+    },
+
+    {
+      "name": "glass",
+      "codes": ["GL", "GLS",
+        "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80"]
+    },
+
+    {
+      "name": "composition",
+      "codes": ["C/PAP", "C/GL", "PapPet",
+        "80", "81", "82", "83", "84", "85", "86", "87", "90", "91", "92", "93", "94", "95", "96", "97", "98"]
+    }
+  ]
+}

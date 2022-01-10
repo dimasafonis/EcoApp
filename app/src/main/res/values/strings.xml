@@ -26,16 +26,62 @@
     <string name="plastic">Пластмасса</string>
     <string name="paper">Бумага</string>
     <string name="metal">Метал</string>
-    <string name="glass">Стекло</string>
     <string name="organic">Органичиский</string>
+    <string name="glass">Стекло</string>
     <string name="composite">Композиционные</string>
-    <!-- Subtypes -->
+    <!-- Subtypes: Plastic -->
     <string name="pet">Полиэтилентерефталат (лавсан)</string>
     <string name="pe">Полиэтилен высокой плотности (низкого давления)</string>
     <string name="pvc">Поливинилхлорид</string>
     <string name="peld">Полиэтилен низкой плотности (высокого давления)</string>
     <string name="pp">Полипропилен</string>
     <string name="ps">Полистирол</string>
-    <string name="o">Другой</string>
+    <string name="other">Другой</string>
     <string name="abs">АБС</string>
+
+    <!-- Subtypes: Paper -->
+    <string name="corrugated_cardboard">Гофрированный картон</string>
+    <string name="cardboard">Картон</string>
+    <!-- Paper string -->
+    <string name="wax_paper">Вощёная бумага</string>
+
+    <!-- Subtypes: Metal -->
+    <string name="steel">Сталь</string>
+    <string name="alu">Алюминий</string>
+
+    <!-- Subtypes: Organic -->
+    <string name="wood">Древесина</string>
+    <string name="cork">Пробка</string>
+    <string name="cotton">Хлопок</string>
+    <string name="jute_fiber">Джутовое волокно</string>
+
+    <!-- Subtypes: Glass -->
+    <string name="glass_t">Бесцветное стекло</string>
+    <string name="glass_green">Зелёное стекло</string>
+    <string name="glass_brown">Коричневое стекло</string>
+    <string name="glass_dark_brown">Тёмно коричневое стекло</string>
+    <string name="glass_light_brown">Светло коричневое стекло</string>
+    <string name="glass_lead">Стекло с малым содеранием свинца</string>
+    <string name="crystal">Хрусталь</string>
+    <string name="glass_copper">Стекло, покрытое медью</string>
+    <string name="glass_silver">Стекло, покрытое серебром</string>
+    <string name="glass_gold">Стекло, покрытое золотом</string>
+
+    <!-- Subtypes: Composition -->
+    <string name="paper_unknown">Бумага/Неизвестный материал</string>
+    <string name="paper_plastic">Бумага/Пластик</string>
+    <string name="paper_alu">Бумага/Алюминий</string>
+    <string name="paper_tinplate">Бумага/Жесть</string>
+    <string name="paper_plastic_alu">Бумага/Пластик/Алюминий</string>
+    <string name="paper_plastic_alu_tinplate">Бумага/Пластик/Алюминий/Жесть</string>
+    <string name="bio_plastic">Биологический материал/Пластик</string>
+    <string name="plastic_alu">Пластик/Алюминий</string>
+    <string name="plastic_tinplate">Пластик/Жесть</string>
+    <string name="plastic_unknown">Пластик/Неизвестный материал</string>
+    <string name="glass_plastic">Стекло/Пластик</string>
+    <string name="glass_alu">Стекло/Алюминний</string>
+    <string name="glass_tinplate">Стекло/Жесть</string>
+    <string name="glass_unknown">Стекло/Неизвестный материал</string>
+
+    <string name="you_captured">Изображение, которое вы отсканировали</string>
 </resources>
