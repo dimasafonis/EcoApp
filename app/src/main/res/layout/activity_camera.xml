@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CameraActivity">
-    <ImageView
+    <androidx.camera.view.PreviewView
         android:id="@+id/preview"
         android:layout_width="190dp"
         android:layout_height="307dp"
@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/you_captured" />
-
+<!--
     <Button
         android:id="@+id/capture"
         android:layout_width="wrap_content"
@@ -25,6 +25,17 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.5" />-->
+
+    <ImageButton
+        android:id="@+id/capture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        android:contentDescription="Сделать фото" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
