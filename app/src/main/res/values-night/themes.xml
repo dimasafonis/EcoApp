@@ -2,10 +2,15 @@
     <!-- Base application theme. -->
     <style name="Theme.EcoApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#58585C</item>
+        <item name="colorPrimary">@color/night_background</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@android:color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorOnSecondary">@android:color/white</item>
 
-        <item name="android:background">#363842</item>
+        <item name="android:background">@color/night_background</item>
         <item name="android:textColor">@android:color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>

@@ -1,7 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="CustomDialog" parent="Theme.MaterialComponents.Dialog.Alert">
-        <item name="alpha">0.5</item>
-        <item name="borderRoundPercent">15</item>
-    </style>
-</resources>
+<resources></resources>

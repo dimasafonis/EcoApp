@@ -84,7 +84,7 @@
       "recycle": 1
     },
 
-    {
+  {
       "codes": [40, "FE"],
       "res": "steel",
       "cat": "metal",
@@ -204,28 +204,28 @@
     },
 
     {
-      "codes": [81, "PapPet", "C/PAP", "CPAP"],
+      "codes": [81, "PapPet", "C/PAP"],
       "res": "paper_plastic",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
-      "codes": [82, "C/PAP", "CPAP"],
+      "codes": [82, "C/PAP"],
       "res": "paper_alu",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
-      "codes": [83, "C/PAP", "CPAP"],
+      "codes": [83, "C/PAP"],
       "res": "paper_tinplate",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
-      "codes": [84, "C/PAP", "CPAP"],
+      "codes": [84, "C/PAP"],
       "res": "paper_plastic_alu",
       "cat": "composition",
       "recycle": 0.5
@@ -281,14 +281,14 @@
     },
 
     {
-      "codes": [97, "C/GL", "CGL"],
+      "codes": [97, "C/GL"],
       "res": "glass_tinplate",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
-      "codes": [98, "C/GL", "CGL"],
+      "codes": [98, "C/GL"],
       "res": "glass_unknown",
       "cat": "composition",
       "recycle": 0.5
@@ -327,7 +327,7 @@
 
     {
       "name": "composition",
-      "codes": ["C/PAP", "CPAP", "C/GL", "CGL", "PapPet",
+      "codes": ["C/PAP", "C/GL", "PapPet",
         "80", "81", "82", "83", "84", "85", "86", "87", "90", "91", "92", "93", "94", "95", "96", "97", "98"]
     }
   ]
