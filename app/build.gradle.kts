@@ -6,6 +6,14 @@ plugins {
 android {
     compileSdk = 31
 
+    signingConfigs {
+        create("sign") {
+            storeFile = file("/home/dima/EcoApp/keystore.jks")
+            storePassword = "eCoApP"
+            keyAlias = "key0"
+        }
+    }
+
     defaultConfig {
         applicationId = "dimasafonis.ecoapp"
         minSdk = 21
@@ -19,6 +27,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("sign")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -33,13 +42,11 @@ android {
 
 dependencies {
     implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.0")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
-    implementation("com.google.mlkit:text-recognition:16.0.0-beta2")
-    implementation("org.yaml:snakeyaml:1.30")
+    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("com.google.android.material:material:1.5.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.3")
+    implementation("com.google.mlkit:text-recognition:16.0.0-beta3")
     implementation("com.google.code.gson:gson:2.8.9")
-//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
 }

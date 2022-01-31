@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.MediaStore.EXTRA_OUTPUT
 import android.util.Log
+import android.view.ContextThemeWrapper
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.ImageView
@@ -21,6 +22,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
+import androidx.core.net.toFile
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -70,32 +72,6 @@ class CameraActivity : AppCompatActivity() {
         capture.setOnClickListener { capture() }
 
         codes = Codes.load(assets.open("recycleCodes.json"))
-//        results = GridLayout(this)
-//        results.columnCount = 2
-//        results.rowCount = 4
-//        results.setOnGenericMotionListener { v, event ->
-//            when (event.action and ACTION_MASK) {
-//                ACTION_DOWN -> {
-//                    val params = v.layoutParams as ConstraintLayout.LayoutParams
-//                    lastResultX = (event.rawX - params.leftMargin).toInt()
-//                    lastResultY = (event.rawY - params.topMargin).toInt()
-//                }
-//                ACTION_MOVE, ACTION_HOVER_MOVE -> {
-//                    val params = v.layoutParams as ConstraintLayout.LayoutParams
-//                    params.leftMargin = (event.rawX - lastResultX).toInt()
-//                    params.topMargin = (event.rawY - lastResultY).toInt()
-//                    lastResultX = (event.rawX - params.leftMargin).toInt()
-//                    lastResultY = (event.rawY - params.topMargin).toInt()
-//                    v.layoutParams = params
-//                }
-//            }
-//            true
-//        }
-//        findViewById<ConstraintLayout>(R.id.root).addView(results)
-//
-//        if (firstTime) {
-//
-//        }
     }
 
     private fun capture() {
@@ -107,11 +83,15 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private val imageEditor = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        imageUri = it.data?.data ?: imageUri
+        if (imageUri == it.data?.data) {
+            imageFile = imageUri!!.toFile()
+        }
         mainProcess()
     }
 
     private fun preProcess() {
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(this, R.style.Dialog)
             .setTitle("Обработка")
             .setMessage("Вы хотите обработать это изображение? (Это может повысить качество распознавания)")
             .setPositiveButton("Да") { dialog, _ ->
