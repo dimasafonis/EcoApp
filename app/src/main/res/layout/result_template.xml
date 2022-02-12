@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-</LinearLayout>
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow android:id="@+id/material_count">
+
+            <TextView android:id="@+id/material_count_about" />
+
+            <TextView android:id="@+id/material_count_get" />
+        </TableRow>
+
+        <TableRow android:id="@+id/get_count">
+
+            <TextView android:id="@+id/get_count_about" />
+
+            <TextView android:id="@+id/get_count_get" />
+        </TableRow>
+
+        <TableRow android:id="@+id/type">
+
+            <TextView android:id="@+id/type_about" />
+
+            <TextView android:id="@+id/type_get" />
+        </TableRow>
+
+        <TableRow android:id="@+id/subtype">
+
+            <TextView android:id="@+id/subtype_about" />
+
+            <TextView android:id="@+id/subtype_get" />
+        </TableRow>
+
+        <TableRow android:id="@+id/recommendations">
+
+            <TextView android:id="@+id/recommendations_about" />
+
+            <TextView android:id="@+id/recommendations_get" />
+
+        </TableRow>
+    </TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

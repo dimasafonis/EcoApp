@@ -1,3 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Dialog" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="backgroundColor">#9423233B</item>
+        <item name="borderRoundPercent">30</item>
+    </style>
 </resources>

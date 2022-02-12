@@ -8,9 +8,10 @@ android {
 
     signingConfigs {
         create("sign") {
-            storeFile = file("/home/dima/EcoApp/keystore.jks")
-            storePassword = "eCoApP"
-            keyAlias = "key0"
+            storeFile = file("/home/dima/keys.jks")
+            storePassword = "Kopeko12kopeko"
+            keyAlias = "ecoapp"
+            keyPassword = "Kopeko12kopeko"
         }
     }
 
@@ -28,7 +29,10 @@ android {
         getByName("release") {
             isMinifyEnabled = false
             signingConfig = signingConfigs.getByName("sign")
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {

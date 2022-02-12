@@ -1,6 +1,7 @@
 package dimasafonis.ecoapp
 
 import android.Manifest.permission.CAMERA
+import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.Intent.*
@@ -9,17 +10,19 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcel
 import android.provider.MediaStore
 import android.provider.MediaStore.EXTRA_OUTPUT
 import android.util.Log
-import android.view.ContextThemeWrapper
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.widget.Button
-import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.core.net.toFile
@@ -30,26 +33,23 @@ import java.io.File
 
 class CameraActivity : AppCompatActivity() {
 
-    private var lastResultX = 0
-    private var lastResultY = 0
-    var firstTime = true
-
     private lateinit var tmp: File
     private val tag = "DimasafonisCodes"
     lateinit var preview: ImageView
     lateinit var capture: Button
-    lateinit var results: GridLayout
+
+    lateinit var resultsFragment: Results
+
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_OK) preProcess()
+        if (it.resultCode == RESULT_OK) mainProcess()
     }
     private val cameraPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         if (!it) {
-            Toast.makeText(this, "", Toast.LENGTH_LONG)
+            Toast.makeText(this, "Разрешите использовать камеру в настройках, без неё приложение не будет работать", Toast.LENGTH_LONG)
             finish()
         }
     }
 
-    private var wasEditor = false
     private var imageFile: File? = null
     private var imageUri: Uri? = null
     private lateinit var codes: Codes
@@ -60,9 +60,6 @@ class CameraActivity : AppCompatActivity() {
         tmp = File(externalCacheDir!!, "tmp")
         if (!tmp.exists()) tmp.mkdir()
 
-        if (File(filesDir, "data").exists()) firstTime = false
-        else File(filesDir, "data").createNewFile()
-
         if (Build.VERSION.SDK_INT >= 23)
             if (checkSelfPermission(CAMERA) == PERMISSION_DENIED) cameraPermission.launch(CAMERA)
 
@@ -72,6 +69,8 @@ class CameraActivity : AppCompatActivity() {
         capture.setOnClickListener { capture() }
 
         codes = Codes.load(assets.open("recycleCodes.json"))
+
+        resultsFragment = Results.newInstance()
     }
 
     private fun capture() {
@@ -80,51 +79,6 @@ class CameraActivity : AppCompatActivity() {
         imageUri = FileProvider.getUriForFile(this, "$packageName.provider", imageFile!!)
         camera.putExtra(EXTRA_OUTPUT, imageUri)
         cameraLauncher.launch(camera)
-    }
-
-    private val imageEditor = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        imageUri = it.data?.data ?: imageUri
-        if (imageUri == it.data?.data) {
-            imageFile = imageUri!!.toFile()
-        }
-        mainProcess()
-    }
-
-    private fun preProcess() {
-        AlertDialog.Builder(this, R.style.Dialog)
-            .setTitle("Обработка")
-            .setMessage("Вы хотите обработать это изображение? (Это может повысить качество распознавания)")
-            .setPositiveButton("Да") { dialog, _ ->
-                Intent(ACTION_EDIT).run {
-                    setDataAndType(imageUri, "image/*")
-                    putExtra(EXTRA_OUTPUT, imageUri)
-                    addFlags(FLAG_GRANT_WRITE_URI_PERMISSION)
-                    addFlags(FLAG_GRANT_READ_URI_PERMISSION)
-                    try {
-//                        startActivity(this)
-                        imageEditor.launch(this)
-                    } catch (e: ActivityNotFoundException) {
-                        AlertDialog.Builder(this@CameraActivity)
-                            .setTitle("Не получается найти подходящее приложение")
-                            .setMessage("Попробуйте установить приложение для редактирования фотографий")
-                    }
-                }
-                dialog.cancel()
-                wasEditor = true
-            }
-            .setNegativeButton("Нет") { dialog, _ ->
-                dialog.cancel()
-                mainProcess()
-            }
-            .create().show()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (wasEditor) {
-            mainProcess()
-            wasEditor = false
-        }
     }
 
     private fun mainProcess() {
@@ -137,7 +91,7 @@ class CameraActivity : AppCompatActivity() {
             image = InputImage.fromFilePath(this, imageUri!!)
         }
         catch (e: Exception) {
-            Log.e(tag, "Exception in method mainProcces", e)
+            Log.e(tag, "Exception in method mainProcess", e)
         }
         if (image == null) return
 
@@ -198,7 +152,7 @@ class CameraActivity : AppCompatActivity() {
                         var containsSlash = false
                         it.text.forEach { c ->
                             if (c in digits) containsDigits = true
-                            if (c in chars) containsChars = true
+                            if (c.lowercaseChar() in chars) containsChars = true
                             if (c == '/') containsSlash = true
                         }
                         if (containsDigits && containsSlash && !containsChars) {
@@ -249,7 +203,7 @@ class CameraActivity : AppCompatActivity() {
                 }
                 catch (e: Exception) {
                     if (firstTryWorked){
-                        AlertDialog.Builder(this)
+                        AlertDialog.Builder(this, R.style.Dialog)
                             .setTitle("Ошибка")
                             .setMessage("При распозновании произошла ошибка, попробуйте ещё раз")
                             .create().show()
@@ -271,7 +225,7 @@ class CameraActivity : AppCompatActivity() {
                     else category.name
                 ) + "\n"
                 message += "${getString(R.string.material_subtype)}: "
-                message += getString(code?.res ?: "unknown") + "\n"
+                message += getString(code?.name ?: "unknown") + "\n"
                 message += when (code?.recycle) {
                     0f -> getString(R.string.not_recycle)
                     0.3f -> {
@@ -287,7 +241,7 @@ class CameraActivity : AppCompatActivity() {
                     else -> throw RuntimeException("Recycle value not in 0..1")
                 }
 
-                AlertDialog.Builder(this)
+                AlertDialog.Builder(this, R.style.Dialog)
                     .setTitle(R.string.recognized_text)
                     .setMessage(message)
                     .create().show()

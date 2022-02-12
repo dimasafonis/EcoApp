@@ -8,7 +8,7 @@ class Codes {
     var categories: ArrayList<Category> = arrayListOf()
 
     data class Category(val name: String, val codes: List<String>)
-    data class Code(val codes: List<String>, val res: String, val cat: String,
+    data class Code(val codes: List<String>, val name: String, val cat: String,
                val recycle: Float)
 
     companion object {
