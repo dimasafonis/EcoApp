@@ -1,6 +1,6 @@
 package dimasafonis.ecoapp
 
-import android.Manifest.permission.CAMERA
+import android.Manifest.permission.*
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -19,6 +19,7 @@ import android.view.MotionEvent
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -41,14 +42,32 @@ class CameraActivity : AppCompatActivity() {
     lateinit var resultsFragment: Results
 
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_OK) mainProcess()
+        if (it.resultCode == RESULT_OK) preProcess()
     }
-    private val cameraPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+    private val cameraPermissionLambda: (Boolean) -> Unit = {
         if (!it) {
-            Toast.makeText(this, "Разрешите использовать камеру в настройках, без неё приложение не будет работать", Toast.LENGTH_LONG)
-            finish()
+            Toast.makeText(
+                this,
+                "Разрешите использовать камеру, без неё приложение не будет работать",
+                Toast.LENGTH_LONG
+            ).show()
+            cameraPermission.launch(CAMERA)
         }
     }
+    private val cameraPermission = registerForActivityResult(ActivityResultContracts.RequestPermission(), cameraPermissionLambda)
+    private val readPermissionLambda: (Boolean) -> Unit = {
+        if (!it)
+            Toast.makeText(
+                this,
+                "Разрешите читать содержимое хранилища, без этого некоторые функции приложения не будет работать",
+                Toast.LENGTH_LONG
+            ).show()
+        readPermissions.launch(READ_EXTERNAL_STORAGE)
+    }
+    private val readPermissions: ActivityResultLauncher<String> = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+        readPermissionLambda
+    )
 
     private var imageFile: File? = null
     private var imageUri: Uri? = null
@@ -60,8 +79,10 @@ class CameraActivity : AppCompatActivity() {
         tmp = File(externalCacheDir!!, "tmp")
         if (!tmp.exists()) tmp.mkdir()
 
-        if (Build.VERSION.SDK_INT >= 23)
+        if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(CAMERA) == PERMISSION_DENIED) cameraPermission.launch(CAMERA)
+            if (checkSelfPermission(READ_EXTERNAL_STORAGE) == PERMISSION_DENIED) readPermissions.launch(READ_EXTERNAL_STORAGE)
+        }
 
         preview = findViewById(R.id.preview)
         capture = findViewById(R.id.capture)
@@ -79,6 +100,28 @@ class CameraActivity : AppCompatActivity() {
         imageUri = FileProvider.getUriForFile(this, "$packageName.provider", imageFile!!)
         camera.putExtra(EXTRA_OUTPUT, imageUri)
         cameraLauncher.launch(camera)
+    }
+
+    private val imageEditor = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        imageUri = it.data?.data ?: it.data?.getParcelableExtra(EXTRA_OUTPUT) ?: imageUri
+        val cursor = contentResolver.query(imageUri!!, null, null, null, null)
+        if (cursor != null) {
+            cursor.moveToFirst()
+            Log.i(tag, cursor.columnNames.reduce { x, y -> "$x, $y" })
+        }
+        mainProcess()
+    }
+
+    private fun preProcess() {
+        AlertDialog.Builder(this, R.style.Dialog)
+            .setTitle("Обработка")
+            .setMessage("Хотите обработать изобрадение\n(Вероятность успешного рампознования может повыситься)?")
+            .setPositiveButton("Да") { _, _ ->
+                val editor = Intent(ACTION_EDIT)
+                editor.flags = FLAG_GRANT_WRITE_URI_PERMISSION or FLAG_GRANT_READ_URI_PERMISSION
+                editor.setDataAndType(imageUri, "image/jpeg")
+                editor.putExtra(EXTRA_OUTPUT, imageUri)
+            }
     }
 
     private fun mainProcess() {
