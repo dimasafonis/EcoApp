@@ -1,32 +1,30 @@
 package dimasafonis.ecoapp
 
-import android.Manifest.permission.*
-import android.app.PendingIntent
-import android.content.ActivityNotFoundException
+import android.Manifest.permission.CAMERA
 import android.content.Intent
-import android.content.Intent.*
 import android.content.pm.PackageManager.PERMISSION_DENIED
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcel
 import android.provider.MediaStore
 import android.provider.MediaStore.EXTRA_OUTPUT
 import android.util.Log
-import android.view.GestureDetector
-import android.view.MotionEvent
+import android.view.View
+import android.view.View.GONE
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
-import androidx.core.net.toFile
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -35,14 +33,29 @@ import java.io.File
 class CameraActivity : AppCompatActivity() {
 
     private lateinit var tmp: File
-    private val tag = "DimasafonisCodes"
+    companion object {
+        @JvmStatic
+        private val TAG = "DimasafonisCodes"
+        @JvmStatic
+        private val DIGITS = arrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
+        @JvmStatic
+        private val CHARS = arrayOf(
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'g', 'k', 'l', 'm',
+            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+        )
+    }
     lateinit var preview: ImageView
     lateinit var capture: Button
-
-    lateinit var resultsFragment: Results
+    lateinit var bottomSheetBeh: BottomSheetBehavior<ConstraintLayout>
+    lateinit var materialCountText: TextView
+    lateinit var recycleCountText: TextView
+    lateinit var materialType: TextView
+    lateinit var materialSubtype: TextView
+    lateinit var recommendations: TextView
+    private lateinit var emptyText: TextView
 
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_OK) preProcess()
+        if (it.resultCode == RESULT_OK) mainProcess()
     }
     private val cameraPermissionLambda: (Boolean) -> Unit = {
         if (!it) {
@@ -55,23 +68,12 @@ class CameraActivity : AppCompatActivity() {
         }
     }
     private val cameraPermission = registerForActivityResult(ActivityResultContracts.RequestPermission(), cameraPermissionLambda)
-    private val readPermissionLambda: (Boolean) -> Unit = {
-        if (!it)
-            Toast.makeText(
-                this,
-                "Разрешите читать содержимое хранилища, без этого некоторые функции приложения не будет работать",
-                Toast.LENGTH_LONG
-            ).show()
-        readPermissions.launch(READ_EXTERNAL_STORAGE)
-    }
-    private val readPermissions: ActivityResultLauncher<String> = registerForActivityResult(
-        ActivityResultContracts.RequestPermission(),
-        readPermissionLambda
-    )
 
     private var imageFile: File? = null
     private var imageUri: Uri? = null
     private lateinit var codes: Codes
+    private lateinit var typesMap: Map<String, *>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +83,6 @@ class CameraActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(CAMERA) == PERMISSION_DENIED) cameraPermission.launch(CAMERA)
-            if (checkSelfPermission(READ_EXTERNAL_STORAGE) == PERMISSION_DENIED) readPermissions.launch(READ_EXTERNAL_STORAGE)
         }
 
         preview = findViewById(R.id.preview)
@@ -91,7 +92,60 @@ class CameraActivity : AppCompatActivity() {
 
         codes = Codes.load(assets.open("recycleCodes.json"))
 
-        resultsFragment = Results.newInstance()
+        typesMap = mapOf(
+            *(
+                    codes.codes.run {
+                        val pairs = arrayListOf<Pair<String, Codes.Code>>()
+                        forEach {
+                            it.codes.forEach { code ->
+                                pairs.add(code to it)
+                            }
+                        }
+                        pairs.toArray()
+                        val pairsArray: Array<Pair<String, Codes.Code>> = Array(pairs.size) { "" to Codes.Code(listOf(), "", "", 0F) }
+                        pairs.forEachIndexed { index, pair ->
+                            pairsArray[index] = pair
+                        }
+                        pairsArray
+                    }
+                    ),
+
+            *(
+                    codes.categories.run {
+                        val pairs = arrayListOf<Pair<String, Codes.Category>>()
+                        forEach {
+                            it.codes.forEach { code ->
+                                pairs.add(code to it)
+                            }
+                        }
+                        val pairsArray: Array<Pair<String, Codes.Category>> = Array(pairs.size) { "" to Codes.Category("", listOf()) }
+                        pairs.forEachIndexed { index, pair ->
+                            pairsArray[index] = pair
+                        }
+                        pairsArray
+                    }
+                    )
+        )
+        bottomSheetBeh = BottomSheetBehavior.from(findViewById(R.id.bottomSheet))
+
+        bottomSheetBeh.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                TODO("Not yet implemented")
+            }
+        })
+        findViewById<AppCompatImageView>(R.id.arrow).setOnClickListener {
+            bottomSheetBeh.state = if (bottomSheetBeh.state == STATE_COLLAPSED) STATE_EXPANDED else STATE_COLLAPSED
+        }
+        materialCountText = findViewById<TextView>(R.id.material_count).also { it.visibility = GONE }
+        recycleCountText = findViewById<TextView>(R.id.recycle_count).also { it.visibility = GONE }
+        materialType = findViewById<TextView>(R.id.material_type).also { it.visibility = GONE }
+        materialSubtype = findViewById<TextView>(R.id.material_subtype).also { it.visibility = GONE }
+        recommendations = findViewById<TextView>(R.id.recommendation).also { it.visibility = GONE }
+        emptyText = findViewById(R.id.empty_text)
     }
 
     private fun capture() {
@@ -100,28 +154,6 @@ class CameraActivity : AppCompatActivity() {
         imageUri = FileProvider.getUriForFile(this, "$packageName.provider", imageFile!!)
         camera.putExtra(EXTRA_OUTPUT, imageUri)
         cameraLauncher.launch(camera)
-    }
-
-    private val imageEditor = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        imageUri = it.data?.data ?: it.data?.getParcelableExtra(EXTRA_OUTPUT) ?: imageUri
-        val cursor = contentResolver.query(imageUri!!, null, null, null, null)
-        if (cursor != null) {
-            cursor.moveToFirst()
-            Log.i(tag, cursor.columnNames.reduce { x, y -> "$x, $y" })
-        }
-        mainProcess()
-    }
-
-    private fun preProcess() {
-        AlertDialog.Builder(this, R.style.Dialog)
-            .setTitle("Обработка")
-            .setMessage("Хотите обработать изобрадение\n(Вероятность успешного рампознования может повыситься)?")
-            .setPositiveButton("Да") { _, _ ->
-                val editor = Intent(ACTION_EDIT)
-                editor.flags = FLAG_GRANT_WRITE_URI_PERMISSION or FLAG_GRANT_READ_URI_PERMISSION
-                editor.setDataAndType(imageUri, "image/jpeg")
-                editor.putExtra(EXTRA_OUTPUT, imageUri)
-            }
     }
 
     private fun mainProcess() {
@@ -134,68 +166,24 @@ class CameraActivity : AppCompatActivity() {
             image = InputImage.fromFilePath(this, imageUri!!)
         }
         catch (e: Exception) {
-            Log.e(tag, "Exception in method mainProcess", e)
+            Log.e(TAG, "Exception in method mainProcess", e)
         }
         if (image == null) return
 
         recognizer.process(image)
             .addOnSuccessListener exitLambda@{ text ->
-                var typesMap: Map<String, *>? =
-                    mapOf(
-                        *(
-                                codes.codes.run {
-                                    val pairs = arrayListOf<Pair<String, Codes.Code>>()
-                                    forEach {
-                                        it.codes.forEach { code ->
-                                            pairs.add(code to it)
-                                        }
-                                    }
-                                    pairs.toArray()
-                                    val pairsArray: Array<Pair<String, Codes.Code>> = Array(pairs.size) { "" to Codes.Code(listOf(), "", "", 0F) }
-                                    pairs.forEachIndexed { index, pair ->
-                                        pairsArray[index] = pair
-                                    }
-                                    pairsArray
-                                }
-                                ),
-
-                        *(
-                                codes.categories.run {
-                                    val pairs = arrayListOf<Pair<String, Codes.Category>>()
-                                    forEach {
-                                        it.codes.forEach { code ->
-                                            pairs.add(code to it)
-                                        }
-                                    }
-                                    val pairsArray: Array<Pair<String, Codes.Category>> = Array(pairs.size) { "" to Codes.Category("", listOf()) }
-                                    pairs.forEachIndexed { index, pair ->
-                                        pairsArray[index] = pair
-                                    }
-                                    pairsArray
-                                }
-                                )
-                    )
-
-                Log.i(tag, "Recognized text ${text.text}")
+                Log.i(TAG, "Recognized text ${text.text}")
                 val types = arrayListOf<String>()
                 var materialCount: Short = 0
                 var materialAfterRecycle: Short = 0
-                if (typesMap != null) {
-                    @Suppress("NAME_SHADOWING")
-                    val typesMap: Map<String, *> = typesMap
-                    text.textBlocks.forEach {
-                        val digits = arrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
-                        val chars =
-                            arrayOf(
-                                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'g', 'k', 'l', 'm',
-                                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-                            )
+                text.textBlocks.forEach {
+                    it.lines.forEach { line ->
                         var containsDigits = false
                         var containsChars = false
                         var containsSlash = false
-                        it.text.forEach { c ->
-                            if (c in digits) containsDigits = true
-                            if (c.lowercaseChar() in chars) containsChars = true
+                        line.text.forEach { c ->
+                            if (c in DIGITS) containsDigits = true
+                            if (c.lowercaseChar() in CHARS) containsChars = true
                             if (c == '/') containsSlash = true
                         }
                         if (containsDigits && containsSlash && !containsChars) {
@@ -206,12 +194,8 @@ class CameraActivity : AppCompatActivity() {
                         if ((containsChars || containsDigits) && !containsSlash)
                             if (typesMap.containsKey(it.text))
                                 types += it.text
-                    }
+                        }
                 }
-
-                @Suppress("UNUSED_VALUE")
-                typesMap = null
-                System.gc()
                 var code: Codes.Code? = null
                 var category: Codes.Category? = null
                 var firstTryWorked = false
@@ -254,43 +238,39 @@ class CameraActivity : AppCompatActivity() {
                     }
                 }
 
-                var message = ""
-                message += "${getString(R.string.material_count)}: "
-                message += if (materialCount == 0.toShort()) getString("unknown") else materialCount.toString()
-                message += "\n"
-                message += "${getString(R.string.material_after_recycle)}: "
-                message += if (materialAfterRecycle == 0.toShort()) getString("unknown") else materialAfterRecycle.toString()
-                message += "\n"
-                message += "${getString(R.string.material_type)}: "
-                message += getString(
-                    if (category?.name == null) {
-                        if (code?.cat == null) "unknown" else code.cat }
-                    else category.name
-                ) + "\n"
-                message += "${getString(R.string.material_subtype)}: "
-                message += getString(code?.name ?: "unknown") + "\n"
-                message += when (code?.recycle) {
-                    0f -> getString(R.string.not_recycle)
-                    0.3f -> {
-                        getString(R.string.dont_use) + "Эта упаковка " +
-                                getString(R.string.bad) +
-                                ", а также " +
-                                getString(R.string.hard_to_recycle)
-                    }
-                    0.4f -> "Эта упаковка " + getString(R.string.bad)
-                    0.5f -> getString(R.string.hard_to_find)
-                    1f -> getString(R.string.use)
+                materialCountText.text = getString(
+                    R.string.material_count,
+                    if (materialCount == 0.toShort()) getString("unknown") else materialCount.toString()
+                )
+                recycleCountText.text = getString(
+                    R.string.material_after_recycle,
+                    if (materialAfterRecycle == 0.toShort()) getString("unknown") else materialAfterRecycle.toString()
+                )
+
+                materialType.text = getString(
+                    R.string.material_type,
+                    getString(
+                        if (category?.name == null)
+                            if (code?.cat == null) "unknown" else code.cat
+                        else category.name
+                    )
+                )
+                materialSubtype.text = getString(
+                    R.string.material_subtype,
+                    getString(code?.name ?: "unknown")
+                )
+                recommendations.text = when (code?.recycle) {
+                    0f -> "Не перерабатывается"
+                    0.3f -> "Эту упаковку лучше не использовать. она содержит вредные материалы, а также мало где принимают этот материал"
+                    0.4f -> "Эта упаковка содержит вредные материалы"
+                    0.5f -> "Материал можно сдать, но далеко не везде"
+                    1f -> "Эта упаковка безопасна"
                     null -> getString("unknown")
                     else -> throw RuntimeException("Recycle value not in 0..1")
                 }
-
-                AlertDialog.Builder(this, R.style.Dialog)
-                    .setTitle(R.string.recognized_text)
-                    .setMessage(message)
-                    .create().show()
             }
             .addOnFailureListener {
-                Log.e(tag, "Cannot recognize text", it)
+                Log.e(TAG, "Cannot recognize text", it)
             }
     }
 

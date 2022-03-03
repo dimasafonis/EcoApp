@@ -2,11 +2,7 @@
 <resources>
     <string name="app_name">Экокамера</string>
     <!-- Use/Don't use -->
-    <string name="dont_use">Эту упаковку лучше не использовать. </string>
-    <string name="bad">содержит вредные материалы</string>
-    <string name="hard_to_recycle">мало мест где принимают этот материал</string>
     <string name="not_recycle">Этот материал не перерабатывается</string>
-    <string name="hard_to_find">Материал можно сдать, но далеко не везде</string>
     <string name="use">Эту упаковку можно сдать</string>
     <!-- Camera -->
     <string name="camera_required">Приложение не сможет работать без камеры</string>
@@ -17,10 +13,10 @@
     <string name="ok">Ок</string>
     <!-- Text Recognition -->
     <string name="recognized_text">Приложение распознало</string>
-    <string name="material_count">Количество материала</string>
-    <string name="material_after_recycle">Количество материала после переработки</string>
-    <string name="material_type">Тип материала</string>
-    <string name="material_subtype">Подтип материала</string>
+    <string name="material_count">Количество материала: %1$s</string>
+    <string name="material_after_recycle">Количество материала после переработки: %1$s</string>
+    <string name="material_type">Тип материала: %1$s</string>
+    <string name="material_subtype">Подтип материала: %1$s</string>
     <string name="unknown">Неизвестно</string>
     <!-- Types -->
     <string name="plastic">Пластмасса</string>
@@ -84,4 +80,5 @@
     <string name="glass_unknown">Стекло/Неизвестный материал</string>
 
     <string name="you_captured">Изображение, которое вы отсканировали</string>
+    <string name="no_results">Вы пока ничего не сканировали</string>
 </resources>
