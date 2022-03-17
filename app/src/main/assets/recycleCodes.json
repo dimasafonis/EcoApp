@@ -297,36 +297,42 @@
   "categories": [
     {
       "name": "plastic",
+      "readableName": "Пластик",
       "codes": ["PET", "PETE", "PEHD", "HDPE", "PVC", "PELD", "LDPE", "PP", "PS", "O", "Other", "ABS",
         "1", "2", "3", "4", "5", "6", "7", "9"]
     },
 
     {
       "name": "paper",
+      "readableName": "Бумага",
       "codes": ["PCB", "PAP", "PBD", "PPB",
         "20", "21", "22", "23"]
     },
 
     {
       "name": "metal",
+      "readableName": "Металл",
       "codes": ["FE", "ALU",
         "40", "41"]
     },
 
     {
       "name": "organic",
+      "readableName": "Органика",
       "codes": ["FOR", "TEX",
         "50", "51", "60", "61"]
     },
 
     {
       "name": "glass",
+      "readableName": "Стекло",
       "codes": ["GL", "GLS",
         "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80"]
     },
 
     {
       "name": "composition",
+      "readableName": "Композиционный материал",
       "codes": ["C/PAP", "C/GL", "PapPet",
         "80", "81", "82", "83", "84", "85", "86", "87", "90", "91", "92", "93", "94", "95", "96", "97", "98"]
     }

@@ -8,5 +8,4 @@
 
     <circle r="50" cx="50.5" cy="50.5" stroke-width="0.5" stroke="#000" fill="#0bb6ff" />
     <circle r="34" cx="50.5" cy="50.5" stroke-width="0.5" stroke="#000" fill="white" />
-    <path d="" />
 </svg>
