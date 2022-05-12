@@ -89,7 +89,6 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var codes: Codes
     private lateinit var typesMap: Map<String, *>
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
