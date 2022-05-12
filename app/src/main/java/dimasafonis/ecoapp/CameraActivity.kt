@@ -4,7 +4,6 @@ import android.Manifest.permission.CAMERA
 import android.content.Intent
 import android.content.Intent.*
 import android.content.pm.PackageManager.PERMISSION_DENIED
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -15,16 +14,15 @@ import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
@@ -46,6 +44,8 @@ class CameraActivity : AppCompatActivity() {
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'g', 'k', 'l', 'm',
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
         )
+        @JvmStatic
+        lateinit var themeFile: File
     }
     lateinit var preview: ImageView
     lateinit var capture: Button
@@ -92,8 +92,23 @@ class CameraActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
-        if (savedInstanceState != null)
-            onRestoreInstanceState(savedInstanceState)
+
+        val data = File(filesDir, "data")
+        if (!data.exists())
+            data.mkdir()
+        themeFile = File(data, "theme")
+        if (!themeFile.exists()) {
+            themeFile.createNewFile()
+            themeFile.writeText("system")
+        }
+
+        AppCompatDelegate.setDefaultNightMode(when (themeFile.readText()) {
+            "system" -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            "dark" -> AppCompatDelegate.MODE_NIGHT_YES
+            "light" -> AppCompatDelegate.MODE_NIGHT_NO
+            else -> throw IllegalArgumentException("It's not possible!")
+        })
+
         tmp = File(externalCacheDir!!, "tmp")
         if (!tmp.exists()) tmp.mkdir()
 
@@ -156,6 +171,12 @@ class CameraActivity : AppCompatActivity() {
         materialSubtype = findViewById<TextView>(R.id.material_subtype).also { it.visibility = GONE }
         recommendations = findViewById<TextView>(R.id.recommendation).also { it.visibility = GONE }
         emptyText = findViewById(R.id.empty_text)
+
+        findViewById<ImageButton>(R.id.settingsButton).setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
+        if (savedInstanceState != null)
+            onRestoreInstanceState(savedInstanceState)
     }
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         super.onSaveInstanceState(outState, outPersistentState)

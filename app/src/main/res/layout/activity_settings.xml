@@ -6,4 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
+    <TextView
+        android:id="@+id/themeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="Тема:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/themeGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="75dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/systemTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Системная" />
+
+        <RadioButton
+            android:id="@+id/darkTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Тёмная" />
+
+        <RadioButton
+            android:id="@+id/lightTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Светлая" />
+    </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

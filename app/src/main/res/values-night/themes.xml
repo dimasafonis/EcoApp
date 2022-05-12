@@ -7,8 +7,9 @@
 
         <item name="android:background">#404040</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="settingsColor">#004D40</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/background</item>
+        <item name="android:statusBarColor" tools:targetApi="l">#099023</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

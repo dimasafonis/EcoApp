@@ -5,8 +5,9 @@
         <item name="colorPrimary">#47912A</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@android:color/white</item>
+        <item name="settingsColor">#000</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">#FFFFFF</item>
+        <item name="android:statusBarColor" tools:targetApi="l">#47912A</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>
