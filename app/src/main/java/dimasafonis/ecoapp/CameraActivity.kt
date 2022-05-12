@@ -67,12 +67,19 @@ class CameraActivity : AppCompatActivity() {
     }
     private val cameraPermissionLambda: (Boolean) -> Unit = {
         if (!it) {
-            Toast.makeText(
-                this,
-                "Разрешите использовать камеру, без неё приложение не будет работать",
-                Toast.LENGTH_LONG
-            ).show()
-            cameraPermission.launch(CAMERA)
+            AlertDialog.Builder(this)
+                .setTitle("Камера")
+                .setMessage("Разрешите использовать камеру, без неё эта функция не будет работать")
+                .setPositiveButton("Ок") { di, _ ->
+                    di.cancel()
+                    cameraPermission.launch(CAMERA)
+                }
+                .setNegativeButton("Нет") { di, _ ->
+                    di.cancel()
+                }
+        }
+        if (it) {
+            capture()
         }
     }
     private val cameraPermission = registerForActivityResult(ActivityResultContracts.RequestPermission(), cameraPermissionLambda)
@@ -90,10 +97,6 @@ class CameraActivity : AppCompatActivity() {
             onRestoreInstanceState(savedInstanceState)
         tmp = File(externalCacheDir!!, "tmp")
         if (!tmp.exists()) tmp.mkdir()
-
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(CAMERA) == PERMISSION_DENIED) cameraPermission.launch(CAMERA)
-        }
 
         preview = findViewById(R.id.preview)
         capture = findViewById(R.id.capture)
@@ -166,6 +169,14 @@ class CameraActivity : AppCompatActivity() {
         preview.setImageURI(imageUri)
     }
 
+    override fun onResume() {
+        super.onResume()
+        tmp.listFiles()?.forEach {
+            if (it.name != imageFile?.name)
+                it.delete()
+        }
+    }
+
     private fun pickFromGallery() {
         val picker = Intent(ACTION_PICK)
         picker.type = "image/*"
@@ -174,6 +185,12 @@ class CameraActivity : AppCompatActivity() {
     }
     
     private fun capture() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(CAMERA) == PERMISSION_DENIED) {
+                cameraPermission.launch(CAMERA)
+                return
+            }
+        }
         val camera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         imageFile = File.createTempFile("imageText", ".jpg", tmp)
         imageUri = FileProvider.getUriForFile(this, "$packageName.provider", imageFile!!)

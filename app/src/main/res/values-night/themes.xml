@@ -2,10 +2,10 @@
     <!-- Base application theme. -->
     <style name="Theme.EcoApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#4047CF</item>
+        <item name="colorPrimary">#099023</item>
         <item name="colorOnPrimary">@android:color/white</item>
 
-        <item name="android:background">#23233B</item>
+        <item name="android:background">#404040</item>
         <item name="android:textColor">@android:color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/background</item>
