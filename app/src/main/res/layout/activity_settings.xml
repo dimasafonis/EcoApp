@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:text="Тема:"
+        android:text="@string/theme"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,18 +29,18 @@
             android:id="@+id/systemTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Системная" />
+            android:text="@string/system_theme" />
 
         <RadioButton
             android:id="@+id/darkTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Тёмная" />
+            android:text="@string/dark_theme" />
 
         <RadioButton
             android:id="@+id/lightTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Светлая" />
+            android:text="@string/light_theme" />
     </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,7 @@ class Codes {
     var codes: ArrayList<Code> = arrayListOf()
     var categories: ArrayList<Category> = arrayListOf()
 
-    data class Category(val name: String, val codes: List<String>, val readableName: String)
+    data class Category(val name: String, val codes: List<String>)
     data class Code(val codes: List<String>, val name: String, val cat: String,
                val recycle: Float)
 

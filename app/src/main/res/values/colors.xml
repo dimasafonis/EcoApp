@@ -7,7 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
 
-    <color name="night_background">#808080</color>
+    <color name="settingsColor">#404343</color>
+    <color name="night_background">#282B30</color>
     <color name="day_background">@android:color/white</color>
     <color name="light_blue_400">#FF29B6F6</color>
     <color name="light_blue_600">#FF039BE5</color>

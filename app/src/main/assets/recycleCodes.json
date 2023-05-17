@@ -2,294 +2,294 @@
   "codes": [
     {
       "codes": [1, "PET", "PETE"],
-      "name": "Полиэтилентерефталат (лавсан)",
+      "name": "pet",
       "cat": "plastic",
       "recycle": 1
     },
 
     {
       "codes": [2, "PEHD", "PEHD", "HDPE"],
-      "name": "Полиэтилен высокой плотности (низкого давления)",
+      "name": "pe",
       "cat": "plastic",
       "recycle": 1
     },
 
     {
       "codes": [3, "PVC"],
-      "name": "Поливинилхлорид",
+      "name": "pvc",
       "cat": "plastic",
       "recycle": 0.3
     },
 
     {
       "codes": [4, "PELD", "PELD", "LDPE"],
-      "name": "Полиэтилен низкой плотности (высокого давления)",
+      "name": "peld",
       "cat": "plastic",
       "recycle": 0.5
     },
 
     {
       "codes": [5, "PP"],
-      "name": "Полипропилен",
+      "name": "pp",
       "cat": "plastic",
       "recycle": 1
     },
 
     {
       "codes": [6, "PS"],
-      "name": "Полистирол",
+      "name": "ps",
       "cat": "plastic",
       "recycle": 0.3
     },
 
     {
       "codes": [7, "O", "Other"],
-      "name": "Другой",
+      "name": "other",
       "cat": "plastic",
       "recycle": 0
     },
 
     {
       "codes": [9, "ABS"],
-      "name": "АБС",
+      "name": "abs",
       "cat": "plastic",
       "recycle": 1
     },
 
     {
       "codes": [20, "PAP", "PCB"],
-      "name": "Гофрированный картон",
+      "name": "corrugated_cardboard",
       "cat": "paper",
       "recycle": 1
     },
 
     {
       "codes": [21, "PAP"],
-      "name": "Картон",
+      "name": "cardboard",
       "cat": "paper",
       "recycle": 1
     },
 
     {
       "codes": [22, "PAP"],
-      "name": "Бумага",
+      "name": "paper",
       "cat": "paper",
       "recycle": 1
     },
 
     {
       "codes": [23, "PBD", "PPB"],
-      "name": "Вощёная бумага",
+      "name": "wax_paper",
       "cat": "paper",
       "recycle": 1
     },
 
   {
       "codes": [40, "FE"],
-      "name": "Сталь",
+      "name": "steel",
       "cat": "metal",
       "recycle": 1
     },
 
     {
       "codes": [41, "ALU"],
-      "name": "Алюминий",
+      "name": "Aluminum",
       "cat": "metal",
       "recycle": 1
     },
 
     {
       "codes": [50, "FOR"],
-      "name": "Древесина",
+      "name": "Wood",
       "cat": "organic",
       "recycle": 1
     },
 
     {
       "codes": [51, "FOR"],
-      "name": "Пробка",
+      "name": "cork",
       "cat": "organic",
       "recycle": 1
     },
 
     {
       "codes": [60, "TEX"],
-      "name": "Хлопок",
+      "name": "cotton",
       "cat": "organic",
       "recycle": 1
     },
 
     {
       "codes": [61, "TEX"],
-      "name": "Джутовое волокно",
+      "name": "jute_fiber",
       "cat": "organic",
       "recycle": 1
     },
 
     {
       "codes": [70, "GL"],
-      "name": "Бесцветное стекло",
+      "name": "glass_t",
       "cat": "glass",
       "recycle": 1
     },
 
     {
       "codes": [71, "GL"],
-      "name": "Зелёное стекло",
+      "name": "glass_green",
       "cat": "glass",
       "recycle": 1
     },
 
     {
       "codes": [72, "GL"],
-      "name": "Коричневое стекло",
+      "name": "glass_brown",
       "cat": "glass",
       "recycle": 1
     },
 
     {
       "codes": [73, "GL", "GLS"],
-      "name": "Тёмно коричневое стекло",
+      "name": "glass_dark_brown",
       "cat": "glass",
       "recycle": 1
     },
 
     {
       "codes": [74, "GL", "GLS"],
-      "name": "Светло коричневое стекло",
+      "name": "glass_light_brown",
       "cat": "glass",
       "recycle": 1
     },
 
     {
       "codes": [75, "GL", "GLS"],
-      "name": "Стекло с малым содеранием свинца",
+      "name": "glass_lead",
       "cat": "glass",
       "recycle": 1
     },
 
     {
       "codes": [76, "GL", "GLS"],
-      "name": "Хрусталь",
+      "name": "crystal",
       "cat": "glass",
       "recycle": 1
     },
 
     {
       "codes": [77, "GL", "GLS"],
-      "name": "Стекло, покрытое медью",
+      "name": "glass_copper",
       "cat": "glass",
       "recycle": 1
     },
 
     {
       "codes": [78, "GL", "GLS"],
-      "name": "Стекло, покрытое серебром",
+      "name": "glass_silver",
       "cat": "glass",
       "recycle": 1
     },
 
     {
       "codes": [79, "GL"],
-      "name": "Стекло, покрытое золотом",
+      "name": "glass_gold",
       "cat": "glass",
       "recycle": 1
     },
 
     {
       "codes": [80],
-      "name": "Бумага/Неизвестный материал",
+      "name": "paper_unknown",
       "cat": "composition",
       "recycle": 0
     },
 
     {
       "codes": [81, "PapPet", "C/PAP"],
-      "name": "Бумага/Пластик",
+      "name": "paper_plastic",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
       "codes": [82, "C/PAP"],
-      "name": "Бумага/Алюминий",
+      "name": "paper_alu",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
       "codes": [83, "C/PAP"],
-      "name": "Бумага/Жесть",
+      "name": "paper_tinplate",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
       "codes": [84, "C/PAP"],
-      "name": "Бумага/Пластик/Алюминий",
+      "name": "paper_plastic_alu",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
       "codes": [85],
-      "name": "Бумага/Пластик/Алюминий/Жесть",
+      "name": "paper_plastic_alu_tinplate",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
       "codes": [87],
-      "name": "Биологический материал/Пластик",
+      "name": "bio_plastic",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
       "codes": [90],
-      "name": "Пластик/Алюминий",
+      "name": "plastic_alu",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
       "codes": [91],
-      "name": "Пластик/Жесть",
+      "name": "plastic_tinplate",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
       "codes": [92],
-      "name": "Пластик/Неизвестный материал",
+      "name": "plastic_unknown",
       "cat": "composition",
       "recycle": 0
     },
 
     {
       "codes": [95],
-      "name": "Стекло/Пластик",
+      "name": "glass_plastic",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
       "codes": [96],
-      "name": "Стекло/Алюминний",
+      "name": "glass_alu",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
       "codes": [97, "C/GL"],
-      "name": "Стекло/Жесть",
+      "name": "glass_tinplate",
       "cat": "composition",
       "recycle": 0.5
     },
 
     {
       "codes": [98, "C/GL"],
-      "name": "Стекло/Неизвестный материал",
+      "name": "glass_unknown",
       "cat": "composition",
       "recycle": 0.5
     }
@@ -297,42 +297,36 @@
   "categories": [
     {
       "name": "plastic",
-      "readableName": "Пластик",
       "codes": ["PET", "PETE", "PEHD", "HDPE", "PVC", "PELD", "LDPE", "PP", "PS", "O", "Other", "ABS",
         "1", "2", "3", "4", "5", "6", "7", "9"]
     },
 
     {
       "name": "paper",
-      "readableName": "Бумага",
       "codes": ["PCB", "PAP", "PBD", "PPB",
         "20", "21", "22", "23"]
     },
 
     {
       "name": "metal",
-      "readableName": "Металл",
       "codes": ["FE", "ALU",
         "40", "41"]
     },
 
     {
       "name": "organic",
-      "readableName": "Органика",
       "codes": ["FOR", "TEX",
         "50", "51", "60", "61"]
     },
 
     {
       "name": "glass",
-      "readableName": "Стекло",
       "codes": ["GL", "GLS",
         "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80"]
     },
 
     {
-      "name": "composition",
-      "readableName": "Композиционный материал",
+      "name": "composite",
       "codes": ["C/PAP", "C/GL", "PapPet",
         "80", "81", "82", "83", "84", "85", "86", "87", "90", "91", "92", "93", "94", "95", "96", "97", "98"]
     }

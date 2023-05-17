@@ -5,11 +5,11 @@
         <item name="colorPrimary">#099023</item>
         <item name="colorOnPrimary">@android:color/white</item>
 
-        <item name="android:background">#404040</item>
+        <item name="android:background">@color/night_background</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="settingsColor">#004D40</item>
+        <item name="settingsColor">#08781F</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">#099023</item>
+        <item name="android:statusBarColor">#099023</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

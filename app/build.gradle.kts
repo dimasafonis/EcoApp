@@ -4,22 +4,22 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = 33
 
     signingConfigs {
         create("sign") {
-            storeFile = file("/home/dima/keys.jks")
-            storePassword = "Kopeko12kopeko"
-            keyAlias = "ecoapp"
-            keyPassword = "Kopeko12kopeko"
+            storeFile = file("C:\\Users\\dimas\\androidDevelopment.jks")
+            storePassword = "Kopeko13kopeko"
+            keyAlias = "dimasafonisKey"
+            keyPassword = "987665444444"
         }
     }
 
     defaultConfig {
         applicationId = "dimasafonis.ecoapp"
         minSdk = 21
-        targetSdk = 31
-        versionCode = 2
+        targetSdk = 33
+        versionCode = 3
         versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -34,6 +34,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("sign")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -42,17 +45,19 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    namespace = "dimasafonis.ecoapp"
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.1")
-    implementation("com.google.android.material:material:1.5.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.3")
-    implementation("com.google.mlkit:text-recognition:16.0.0-beta3")
+    implementation("androidx.core:core-ktx:1.8.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.google.mlkit:text-recognition:16.0.0")
     implementation("com.google.code.gson:gson:2.9.0")
-    implementation("com.google.android.material:material:1.5.0")
+    implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    implementation(kotlin("reflect"))
 }

@@ -22,7 +22,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
@@ -30,6 +29,7 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import java.io.File
+import kotlin.reflect.KProperty
 
 class CameraActivity : AppCompatActivity() {
 
@@ -68,13 +68,13 @@ class CameraActivity : AppCompatActivity() {
     private val cameraPermissionLambda: (Boolean) -> Unit = {
         if (!it) {
             AlertDialog.Builder(this)
-                .setTitle("Камера")
-                .setMessage("Разрешите использовать камеру, без неё эта функция не будет работать")
-                .setPositiveButton("Ок") { di, _ ->
+                .setTitle(R.string.camera_required_title)
+                .setMessage(R.string.camera_required)
+                .setPositiveButton(android.R.string.ok) { di, _ ->
                     di.cancel()
                     cameraPermission.launch(CAMERA)
                 }
-                .setNegativeButton("Нет") { di, _ ->
+                .setNegativeButton(android.R.string.cancel) { di, _ ->
                     di.cancel()
                 }
         }
@@ -147,7 +147,7 @@ class CameraActivity : AppCompatActivity() {
                                 pairs.add(code to it)
                             }
                         }
-                        val pairsArray: Array<Pair<String, Codes.Category>> = Array(pairs.size) { "" to Codes.Category("", listOf(), "") }
+                        val pairsArray: Array<Pair<String, Codes.Category>> = Array(pairs.size) { "" to Codes.Category("", listOf()) }
                         pairs.forEachIndexed { index, pair ->
                             pairsArray[index] = pair
                         }
@@ -185,7 +185,8 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        imageUri = savedInstanceState.getParcelable("imageUri")
+        imageUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) savedInstanceState.getParcelable("imageUri", Uri::class.java)
+        else savedInstanceState.getParcelable("imageUri")
         preview.setImageURI(imageUri)
     }
 
@@ -241,23 +242,29 @@ class CameraActivity : AppCompatActivity() {
                 var materialAfterRecycle: Short = 0
                 text.textBlocks.forEach {
                     it.lines.forEach { line ->
-                        var containsDigits = false
-                        var containsChars = false
-                        var containsSlash = false
-                        line.text.forEach { c ->
-                            if (c in DIGITS) containsDigits = true
-                            if (c.lowercaseChar() in CHARS) containsChars = true
-                            if (c == '/') containsSlash = true
+                        line.text.split(" ").forEach { word ->
+                            var containsDigits = false
+                            var containsChars = false
+                            var containsSlash = false
+                            word.forEach { c ->
+                                if (c in DIGITS) containsDigits = true
+                                if (c.lowercaseChar() in CHARS) containsChars = true
+                                if (c == '/') containsSlash = true
+                            }
+                            if (containsDigits && containsSlash && !containsChars) {
+                                val values = word.split("/")
+                                materialCount = values[1].toShort()
+                                materialAfterRecycle = values[0].toShort()
+                                if (materialCount <= materialAfterRecycle) {
+                                    materialCount = 0
+                                    materialAfterRecycle = 0
+                                }
+                            }
+                            if ((containsChars || containsDigits) && !containsSlash)
+                                if (typesMap.containsKey(word))
+                                    types += word
                         }
-                        if (containsDigits && containsSlash && !containsChars) {
-                            val values = it.text.split("/")
-                            materialCount = values[1].toShort()
-                            materialAfterRecycle = values[0].toShort()
-                        }
-                        if ((containsChars || containsDigits) && !containsSlash)
-                            if (typesMap.containsKey(it.text))
-                                types += it.text
-                        }
+                    }
                 }
                 var code: Codes.Code? = null
                 var category: Codes.Category? = null
@@ -294,8 +301,8 @@ class CameraActivity : AppCompatActivity() {
                 catch (e: Exception) {
                     if (firstTryWorked){
                         AlertDialog.Builder(this, R.style.Dialog)
-                            .setTitle("Ошибка")
-                            .setMessage("При распозновании произошла ошибка, попробуйте ещё раз")
+                            .setTitle(R.string.error)
+                            .setMessage(R.string.error_during_recognition)
                             .create().show()
                         return@exitLambda
                     }
@@ -303,32 +310,32 @@ class CameraActivity : AppCompatActivity() {
 
                 materialCountText.text = getString(
                     R.string.material_count,
-                    if (materialCount == 0.toShort()) "Неизвестно" else materialCount.toString()
+                    if (materialCount == 0.toShort()) getString(R.string.unknown) else materialCount.toString()
                 )
                 recycleCountText.text = getString(
                     R.string.material_after_recycle,
-                    if (materialAfterRecycle == 0.toShort()) "Неизвестно" else materialAfterRecycle.toString()
+                    if (materialAfterRecycle == 0.toShort()) getString(R.string.unknown) else materialAfterRecycle.toString()
                 )
 
                 materialType.text = getString(
                     R.string.material_type,
-                    if (category?.name == null)
-                        if (code?.cat == null) "Неизвестно" else codes.categories.first { code.cat == it.name }.readableName
-                    else category.readableName
+                    getString(if (category?.name == null)
+                        if (code?.cat != null) codes.categories.first { code.cat == it.name }.name else null
+                    else category.name) ?: getString(R.string.unknown)
                 )
                 materialSubtype.text = getString(
                     R.string.material_subtype,
-                    code?.name ?: "Неизвестно"
+                    getString(code?.name) ?: getString(R.string.unknown)
                 )
-                recommendations.text = when (code?.recycle) {
-                    0f -> "Не перерабатывается"
-                    0.3f -> "Эту упаковку лучше не использовать. она содержит вредные материалы, а также мало где принимают этот материал"
-                    0.4f -> "Эта упаковка содержит вредные материалы"
-                    0.5f -> "Материал можно сдать, но далеко не везде"
-                    1f -> "Эта упаковка безопасна"
-                    null -> "Неизвестно"
+                recommendations.text = getString(when (code?.recycle) {
+                    0f -> R.string.not_recyclable
+                    0.3f -> R.string.avoid_using
+                    0.4f -> R.string.contains_harmful_substances
+                    0.5f -> R.string.safe_but_hard_to_recycle
+                    1f -> R.string.recyclable
+                    null -> R.string.unknown
                     else -> throw RuntimeException("Recycle value not in 0..1")
-                }
+                })
                 emptyText.visibility = GONE
                 materialCountText.visibility = VISIBLE
                 recycleCountText.visibility = VISIBLE
@@ -341,5 +348,12 @@ class CameraActivity : AppCompatActivity() {
                 Log.e(TAG, "Cannot recognize text", it)
             }
     }
-
+    fun getString(key: String?): String? {
+        return try {
+            val property = (R.string::class.members.first { it.name == key && it is KProperty } as? KProperty)
+            getString(property?.getter?.call() as Int)
+        } catch (e: NoSuchElementException) {
+            null
+        }
+    }
 }
